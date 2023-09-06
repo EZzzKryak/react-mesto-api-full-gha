@@ -1,0 +1,26 @@
+.profile__info {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-template-areas:
+  "profile__name profile__edit-btn"
+  "profile__job .";
+  align-items: center;
+  gap: 10px 19px;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__info {
+    column-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .profile__info {
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-areas:
+    ". profile__name profile__edit-btn"
+    ". profile__job .";
+    justify-items: center;
+    row-gap: 7px;
+  }
+}

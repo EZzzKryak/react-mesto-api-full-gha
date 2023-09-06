@@ -1,0 +1,12 @@
+.header__user-container {
+  display: flex;
+  gap: 24px;
+}
+
+@media screen and (max-width: 554px) {
+  .header__user-container {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+}
