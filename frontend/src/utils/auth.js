@@ -45,6 +45,6 @@ class Auth {
   }
 }
 
-const auth = new Auth("https://auth.nomoreparties.co");
+const auth = new Auth("https://rocket.api.nomoredomainsicu.ru");
 
 export default auth;
