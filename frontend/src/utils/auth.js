@@ -43,7 +43,7 @@ class Auth {
       },
     })
       .then(handleRequest)
-      .then(data => data);
+      // .then(data => data);
   }
 }
 

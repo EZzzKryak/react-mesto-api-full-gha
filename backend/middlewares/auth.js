@@ -1,10 +1,8 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const UnathorizedError = require('../errors/unathorized-err');
-const { SECRET_KEY } = require('../utils/constants');
 
-const { NODE_ENV, JWT_SECRET = SECRET_KEY } = process.env;
-console.log(JWT_SECRET);
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
   const token = req.cookies.jwt;

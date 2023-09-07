@@ -10,7 +10,6 @@ const { SECRET_KEY } = require('../utils/constants');
 const { CREATED_CODE_STATUS } = require('../utils/constants');
 
 const { JWT_SECRET = SECRET_KEY } = process.env;
-console.log(JWT_SECRET);
 
 const getProfileUser = (req, res, next) => {
   User.findOne({ _id: req.user._id })
@@ -118,6 +117,7 @@ const login = (req, res, next) => {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
+          sameSite: true,
         })
         .send({
           name: user.name,
