@@ -11,6 +11,7 @@ const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const auth = require('./middlewares/auth');
+const cors = require('./middlewares/cors');
 
 const {
   DEFAULT_CODE_STATUS,
@@ -25,8 +26,8 @@ mongoose.connect(DB_URL);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(requestLogger); // подключаем логгер запросов
+app.use(cors);
 
 app.post(
   '/signup',
