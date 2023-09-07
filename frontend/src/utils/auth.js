@@ -39,7 +39,7 @@ class Auth {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
+        "Accept": "application/json",
       },
     })
       .then(handleRequest)
