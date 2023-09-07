@@ -45,58 +45,55 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    tokenCheck();
-    api
-      .getProfileInfo()
-      .then(userData => {
-        setCurrentUser(userData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    api
-      .getInitialCards()
-      .then(cardsData => {
-        setCards(cardsData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-
-  const tokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
-      if (jwt) {
-        // проверим токен
-        auth.getContent(jwt)
-        .then(res => {
-          if (res) {
-            setCurrentUser(currentUser);
-            setEmail(res.data.email);
-            setLoggedIn(true);
-            navigate("/");
-          }
+    if (loggedIn) {
+      api
+        .getProfileInfo()
+        .then(userData => {
+          setCurrentUser(userData);
         })
         .catch(err => {
           console.log(err);
         });
-      }
+      api
+        .getInitialCards()
+        .then(cardsData => {
+          setCards(cardsData);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-  };
+  }, [loggedIn]);
+
+  // const tokenCheck = () => {
+  //   if (localStorage.getItem("jwt")) {
+  //     const jwt = localStorage.getItem("jwt");
+  //     if (jwt) {
+  //       // проверим токен
+  //       auth.getContent(jwt)
+  //       .then(res => {
+  //         if (res) {
+  //           setCurrentUser(currentUser);
+  //           setEmail(res.data.email);
+  //           setLoggedIn(true);
+  //           navigate("/");
+  //         }
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //     }
+  //   }
+  // };
 
   const handleLogin = (formData, callback) => {
     auth
       .authorizeUser(formData)
       .then(res => {
-        // нужно проверить, есть ли у данных jwt
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          setEmail(formData.email);
-          setLoggedIn(true);
-          callback();
-          navigate("/");
-        }
+        setEmail(formData.email);
+        setLoggedIn(true);
+        callback();
+        navigate("/");
       })
       .catch(err => {
         console.log(err);
@@ -119,11 +116,11 @@ function App() {
       })
       .finally(() => {
         setIsTooltipPopupOpen(true);
-      })
+      });
   };
 
   const handleSignOut = () => {
-    localStorage.removeItem("jwt");
+    // localStorage.removeItem("jwt");
     setLoggedIn(false);
     navigate("/login");
   };

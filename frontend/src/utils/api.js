@@ -14,6 +14,7 @@ class Api {
   getInitialCards() {
     return this._request(`${this._baseUrl}/cards`, {
       headers: this._headers,
+      credentials: 'include',
     });
   }
 
@@ -22,6 +23,7 @@ class Api {
     return this._request(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         name,
         link,
@@ -34,6 +36,7 @@ class Api {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
+      credentials: 'include',
     });
   }
 
@@ -41,6 +44,7 @@ class Api {
   getProfileInfo() {
     return this._request(`${this._baseUrl}/users/me`, {
       headers: this._headers,
+      credentials: 'include',
     });
   }
 
@@ -49,6 +53,7 @@ class Api {
     return this._request(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         name,
         about,
@@ -61,6 +66,7 @@ class Api {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         avatar: avatarData.avatar,
       }),
@@ -71,12 +77,12 @@ class Api {
     return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
+      credentials: 'include',
     });
   }
 }
 
-const api = new Api("https://mesto.nomoreparties.co/v1/cohort-66", {
-  authorization: "3e88d293-6aa5-4be1-80b0-20488c557b9e",
+const api = new Api("https://rocket.api.nomoredomainsicu.ru", {
   "Content-Type": "application/json",
 });
 

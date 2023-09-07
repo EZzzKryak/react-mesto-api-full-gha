@@ -8,7 +8,7 @@ class Auth {
   registerUser({ email, password }) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -16,35 +16,34 @@ class Auth {
         email,
         password,
       }),
-    })
-      .then(handleRequest);
+    }).then(handleRequest);
   }
 
   authorizeUser({ email, password }) {
     return fetch(`${this._baseUrl}/signin`, {
-      method: 'POST',
-      credentials: 'include',
+      method: "POST",
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email,
         password,
-      })
-    })
-    .then(handleRequest);
+      }),
+    }).then(handleRequest);
   }
 
-  getContent(token) {
+  getContent() {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      credentials: 'include',
+      method: "GET",
+      credentials: "include",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     })
-    .then(handleRequest);
+      .then(handleRequest)
+      .then(data => data);
   }
 }
 
