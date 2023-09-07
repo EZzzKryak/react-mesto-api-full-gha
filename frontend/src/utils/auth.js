@@ -48,6 +48,6 @@ class Auth {
   }
 }
 
-const auth = new Auth("https://rocket.api.nomoredomainsicu.ru");
+const auth = new Auth("https://rocket.api.nomoredominsicu.ru");
 
 export default auth;
