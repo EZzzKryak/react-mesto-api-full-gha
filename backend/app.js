@@ -49,7 +49,7 @@ app.post(
       password: Joi.string().required().min(6),
     }),
   }),
-  logins,
+  login,
 );
 
 app.use('/users', auth, userRouter);
