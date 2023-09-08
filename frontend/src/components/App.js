@@ -47,11 +47,15 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       if (localStorage.getItem("jwt")) {
-        tokenCheck();
+        // const jwt = localStorage.getItem("jwt");
+        // tokenCheck();
         api
           .getProfileInfo()
           .then(userData => {
             setCurrentUser(userData);
+            setEmail(userData.email);
+            setLoggedIn(true);
+            navigate("/");
           })
           .catch(err => {
             console.log(err);
@@ -68,25 +72,25 @@ function App() {
     }
   }, [loggedIn]);
 
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      // проверим токен
-      auth
-        .getContent()
-        .then(res => {
-          if (res) {
-            setCurrentUser(currentUser);
-            setEmail(res.data.email);
-            setLoggedIn(true);
-            navigate("/");
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  };
+  // const tokenCheck = () => {
+  //   const jwt = localStorage.getItem("jwt");
+  //   if (jwt) {
+  //     // проверим токен
+  //     auth
+  //       .getContent()
+  //       .then(res => {
+  //         if (res) {
+  //           setCurrentUser(currentUser);
+  //           setEmail(res.data.email);
+  //           setLoggedIn(true);
+  //           navigate("/");
+  //         }
+  //       })
+  //       .catch(err => {
+  //         console.log(err);
+  //       });
+  //   }
+  // };
 
   const handleLogin = (formData, callback) => {
     auth

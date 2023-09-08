@@ -34,16 +34,16 @@ class Auth {
     .then(handleRequest);
   }
 
-  getContent() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
-      }
-    })
-    .then(handleRequest);
-  }
+  // getContent() {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //     }
+  //   })
+  //   .then(handleRequest);
+  // }
 }
 
 const auth = new Auth("https://rocket.api.nomoredomainsicu.ru");
