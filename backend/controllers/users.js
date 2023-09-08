@@ -4,7 +4,7 @@ const User = require('../models/user');
 const ValidationError = require('../errors/validation-err');
 const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
-const { JWT_SECRET = 'dev-secret' } = require('../utils/app.config');
+const { JWT_SECRET } = require('../utils/app.config');
 const { CREATED_CODE_STATUS } = require('../utils/constants');
 
 const getProfileUser = (req, res, next) => {
