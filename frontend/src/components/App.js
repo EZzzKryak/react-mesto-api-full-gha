@@ -232,10 +232,10 @@ function App() {
       });
   };
 
-  const handleAddPlaceSubmit = cardData => {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     setIsLoading(true);
     api
-      .postNewCard(cardData)
+      .postNewCard({ name, link })
       .then(newCard => {
         setCards([newCard, ...cards]);
         closeAllPopups();
