@@ -48,7 +48,8 @@ function App() {
     if (localStorage.getItem("jwt")) {
       tokenCheck();
     }
-    api
+    if(loggedIn) {
+      api
       .getProfileInfo()
       .then(userData => {
         setCurrentUser(userData);
@@ -64,7 +65,8 @@ function App() {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+    }
+  }, [loggedIn]);
 
   const tokenCheck = () => {
       const jwt = localStorage.getItem("jwt");
