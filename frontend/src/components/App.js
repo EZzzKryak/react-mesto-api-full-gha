@@ -63,7 +63,6 @@ function App() {
         api
           .getInitialCards()
           .then(cardsData => {
-            console.log(cardsData);
             setCards(cardsData.cards);
           })
           .catch(err => {
