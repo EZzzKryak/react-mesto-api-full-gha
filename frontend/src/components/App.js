@@ -143,6 +143,7 @@ function App() {
       about: "",
       avatar: "",
     });
+    setCards([]);
     setEmail("");
     navigate("/login");
   };

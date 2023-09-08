@@ -44,7 +44,7 @@ const Main = ({
       </section>
 
       <section className="places">
-        {cards.map(card => (
+        {cards ? (cards.map(card => (
           <Card
             card={card}
             key={card._id}
@@ -52,7 +52,7 @@ const Main = ({
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
           />
-        ))}
+        ))) : null}
       </section>
     </main>
   );
