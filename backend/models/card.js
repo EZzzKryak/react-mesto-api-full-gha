@@ -22,13 +22,13 @@ const cardSchema = new mongoose.Schema(
       ref: 'user',
       required: true,
     },
-    likes: {
-      type: [{
-        type: String,
+    likes: [
+      {
+        type: [],
+        default: [],
         ref: 'user',
-      }],
-      default: [],
-    },
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now,
