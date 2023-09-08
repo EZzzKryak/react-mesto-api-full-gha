@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
+  console.log(card);
   const currentUser = useContext(CurrentUserContext);
 
   const handleClick = () => {
