@@ -39,6 +39,7 @@ class Api {
 
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
   getProfileInfo() {
+    console.log(localStorage.jwt);
     return this._request(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     });

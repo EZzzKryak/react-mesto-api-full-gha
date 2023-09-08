@@ -45,34 +45,35 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("jwt")) {
-      tokenCheck();
-    }
-    if(loggedIn) {
-      api
-      .getProfileInfo()
-      .then(userData => {
-        setCurrentUser(userData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    api
-      .getInitialCards()
-      .then(cardsData => {
-        setCards(cardsData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    if (loggedIn) {
+      if (localStorage.getItem("jwt")) {
+        tokenCheck();
+        api
+          .getProfileInfo()
+          .then(userData => {
+            setCurrentUser(userData);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        api
+          .getInitialCards()
+          .then(cardsData => {
+            setCards(cardsData);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   }, [loggedIn]);
 
   const tokenCheck = () => {
-      const jwt = localStorage.getItem("jwt");
-      if (jwt) {
-        // проверим токен
-        auth.getContent(jwt)
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      // проверим токен
+      auth
+        .getContent(jwt)
         .then(res => {
           if (res) {
             setCurrentUser(currentUser);
@@ -84,7 +85,7 @@ function App() {
         .catch(err => {
           console.log(err);
         });
-      }
+    }
   };
 
   const handleLogin = (formData, callback) => {
@@ -93,7 +94,7 @@ function App() {
       .then(res => {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
-          localStorage.setItem('jwt', res.token);
+          localStorage.setItem("jwt", res.token);
           setEmail(formData.email);
           setLoggedIn(true);
           callback();
@@ -121,7 +122,7 @@ function App() {
       })
       .finally(() => {
         setIsTooltipPopupOpen(true);
-      })
+      });
   };
 
   const handleSignOut = () => {
