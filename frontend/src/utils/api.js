@@ -77,7 +77,7 @@ class Api {
 
 const api = new Api("https://rocket.api.nomoredomainsicu.ru", {
   "Content-Type": "application/json",
-  // authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  authorization: `Bearer ${localStorage.getItem("jwt")}`,
 });
 
 export default api;
