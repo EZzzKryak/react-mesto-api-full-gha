@@ -1,15 +1,11 @@
-require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const ValidationError = require('../errors/validation-err');
 const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
-const { SECRET_KEY } = require('../utils/constants');
-
+const { JWT_SECRET = 'dev-secret' } = require('../utils/app.config');
 const { CREATED_CODE_STATUS } = require('../utils/constants');
-
-const { JWT_SECRET = SECRET_KEY } = process.env;
 
 const getProfileUser = (req, res, next) => {
   User.findOne({ _id: req.user._id })

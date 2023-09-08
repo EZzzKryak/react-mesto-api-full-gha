@@ -1,12 +1,9 @@
-// const crypto = require('crypto');
-
 const DEFAULT_CODE_STATUS = 500;
 const CREATED_CODE_STATUS = 201;
+const DB_URL = 'mongodb://127.0.0.1/mestodb';
 
 const REG_EXP_LINK = /https?:\/\/(www\.)?[\w\-._~:/?#[\]@!\\$&'()\\*+,;=]+#?/;
 const REG_EXP_EMAIL = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-
-const SECRET_KEY = 'dev-secret';
 
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
@@ -21,7 +18,7 @@ module.exports = {
   CREATED_CODE_STATUS,
   REG_EXP_LINK,
   REG_EXP_EMAIL,
-  SECRET_KEY,
   DEFAULT_ALLOWED_METHODS,
   ALOWED_CORS,
+  DB_URL,
 };
