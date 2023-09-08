@@ -45,7 +45,9 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    tokenCheck();
+    if (localStorage.getItem("jwt")) {
+      tokenCheck();
+    }
     api
       .getProfileInfo()
       .then(userData => {
@@ -65,7 +67,6 @@ function App() {
   }, []);
 
   const tokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       if (jwt) {
         // проверим токен
@@ -82,7 +83,6 @@ function App() {
           console.log(err);
         });
       }
-    }
   };
 
   const handleLogin = (formData, callback) => {
@@ -90,6 +90,7 @@ function App() {
       .authorizeUser(formData)
       .then(res => {
         // нужно проверить, есть ли у данных jwt
+        console.log(res);
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           setEmail(formData.email);
