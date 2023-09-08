@@ -99,6 +99,11 @@ function App() {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
           localStorage.setItem("jwt", res.token);
+          setCurrentUser({
+            name: res.name,
+            about: res.about,
+            avatar: res.avatar,
+          });
           setEmail(formData.email);
           setLoggedIn(true);
           callback();
@@ -132,6 +137,12 @@ function App() {
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
+    setCurrentUser({
+      name: "",
+      about: "",
+      avatar: "",
+    });
+    setEmail("");
     navigate("/login");
   };
 
