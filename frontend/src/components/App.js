@@ -73,7 +73,7 @@ function App() {
     if (jwt) {
       // проверим токен
       auth
-        .getContent(jwt)
+        .getContent()
         .then(res => {
           if (res) {
             setCurrentUser(currentUser);

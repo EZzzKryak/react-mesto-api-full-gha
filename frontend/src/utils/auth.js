@@ -23,7 +23,8 @@ class Auth {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify({
         email,
@@ -33,12 +34,12 @@ class Auth {
     .then(handleRequest);
   }
 
-  getContent(token) {
+  getContent() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       }
     })
     .then(handleRequest);
