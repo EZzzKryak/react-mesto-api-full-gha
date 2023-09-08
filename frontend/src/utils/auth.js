@@ -8,7 +8,6 @@ class Auth {
   registerUser({ email, password }) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
-      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,7 +22,6 @@ class Auth {
   authorizeUser({ email, password }) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -38,7 +36,6 @@ class Auth {
   getContent(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,

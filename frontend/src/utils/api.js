@@ -39,7 +39,6 @@ class Api {
 
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
   getProfileInfo() {
-    console.log(localStorage.jwt);
     return this._request(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     });
@@ -78,7 +77,7 @@ class Api {
 
 const api = new Api("https://rocket.api.nomoredomainsicu.ru", {
   "Content-Type": "application/json",
-  authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  // authorization: `Bearer ${localStorage.getItem("jwt")}`,
 });
 
 export default api;
