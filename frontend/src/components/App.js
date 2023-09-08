@@ -233,10 +233,10 @@ function App() {
   };
 
   const handleAddPlaceSubmit = (data) => {
-    console.log(data.data);
+    console.log(data);
     setIsLoading(true);
     api
-      .postNewCard(data.data)
+      .postNewCard(data)
       .then(newCard => {
         setCards([newCard, ...cards]);
         closeAllPopups();
