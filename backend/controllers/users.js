@@ -124,6 +124,7 @@ const login = (req, res, next) => {
           avatar: user.avatar,
           email: user.email,
           _id: user._id,
+          token,
         });
     })
     .catch(next);

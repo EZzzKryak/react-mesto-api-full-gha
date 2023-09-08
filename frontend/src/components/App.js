@@ -89,8 +89,8 @@ function App() {
     auth
       .authorizeUser(formData)
       .then(res => {
+        console.log(res);
         // нужно проверить, есть ли у данных jwt
-        console.log(res.headers);
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           setEmail(formData.email);

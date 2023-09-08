@@ -5,10 +5,11 @@ const UnathorizedError = require('../errors/unathorized-err');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
-  const token = req.cookies.jwt;
-  if (!token) {
+  const { authorization } = req.headers;
+  if (!authorization) {
     throw new UnathorizedError('Неверный логин и/или пароль');
   }
+  const token = authorization.replace('Bearer', '');
   let payload;
   try {
     payload = jwt.verify(
