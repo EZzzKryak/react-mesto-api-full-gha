@@ -44,7 +44,7 @@ const Main = ({
       </section>
 
       <section className="places">
-        {cards && cards.map(card => (
+        {cards.map(card => (
           <Card
             card={card}
             key={card._id}

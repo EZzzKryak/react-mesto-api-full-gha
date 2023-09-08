@@ -64,7 +64,7 @@ function App() {
           .getInitialCards()
           .then(cardsData => {
             console.log(cardsData);
-            setCards(cardsData);
+            setCards(cardsData.cards);
           })
           .catch(err => {
             console.log(err);
