@@ -45,8 +45,6 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(localStorage.getItem("jwt"));
-    console.log(loggedIn);
     if (loggedIn) {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
@@ -117,9 +115,9 @@ function App() {
   //   }
   // }, [loggedIn]);
 
-  const handleLogin = (formData, callback) => {
+  const handleLogin = ({ email, password }, callback) => {
     auth
-      .authorizeUser(formData)
+      .authorizeUser({ email, password })
       .then(res => {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
@@ -162,16 +160,20 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
-    auth.signOut();
-    setCurrentUser({
-      name: "",
-      about: "",
-      avatar: "",
+    auth.signOut().then(() => {
+      setCurrentUser({
+        name: "",
+        about: "",
+        avatar: "",
+      });
+      setCards([]);
+      setEmail("");
+      setLoggedIn(false);
+      navigate("/login");
+    })
+    .catch(err => {
+      console.log(err);
     });
-    setCards([]);
-    setEmail("");
-    setLoggedIn(false);
-    navigate("/login");
   };
 
   const handleCardClick = card => {
