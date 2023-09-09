@@ -15,23 +15,31 @@ class Auth {
         email,
         password,
       }),
-    })
-      .then(handleRequest);
+    }).then(handleRequest);
   }
 
   authorizeUser({ email, password }) {
     return fetch(`${this._baseUrl}/signin`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify({
         email,
         password,
-      })
-    })
-    .then(handleRequest);
+      }),
+    }).then(handleRequest);
+  }
+
+  signOut() {
+    return fetch(`${this._baseUrl}/signout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }).then(handleRequest);
   }
 
   // getContent() {

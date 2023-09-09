@@ -60,6 +60,10 @@ app.post(
   login,
 );
 
+app.post('/signout', (req, res) => {
+  res.send({ message: 'Вы вышли со страницы' });
+});
+
 app.use('/users', auth, userRouter);
 app.use('/cards', auth, cardRouter);
 

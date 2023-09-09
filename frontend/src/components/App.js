@@ -46,16 +46,16 @@ function App() {
 
   useEffect(() => {
     console.log(loggedIn);
-      if (loggedIn) {
-        Promise.all([api.getProfileInfo(), api.getInitialCards()])
-          .then(([userData, cardsData]) => {
-            setCurrentUser(userData);
-            setEmail(userData.email);
-            setCards(cardsData.cards);
-            navigate("/");
-          })
-          .catch(err => console.log(err));
-      }
+    if (loggedIn) {
+      Promise.all([api.getProfileInfo(), api.getInitialCards()])
+        .then(([userData, cardsData]) => {
+          setCurrentUser(userData);
+          setEmail(userData.email);
+          setCards(cardsData.cards);
+          navigate("/");
+        })
+        .catch(err => console.log(err));
+    }
   }, [loggedIn]);
 
   // useEffect(() => {
@@ -155,6 +155,7 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
+    auth.signOut();
     setCurrentUser({
       name: "",
       about: "",
