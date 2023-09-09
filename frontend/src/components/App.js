@@ -136,7 +136,6 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
-    setLoggedIn(false);
     setCurrentUser({
       name: "",
       about: "",
@@ -144,6 +143,7 @@ function App() {
     });
     setCards([]);
     setEmail("");
+    setLoggedIn(false);
     navigate("/login");
   };
 
@@ -205,7 +205,6 @@ function App() {
     api
       .setProfileInfo({name, about})
       .then(user => {
-        console.log(user);
         setCurrentUser(user);
         closeAllPopups();
       })
