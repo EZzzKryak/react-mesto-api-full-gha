@@ -51,7 +51,11 @@ function App() {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
           console.log(userData);
-          setCurrentUser(userData);
+          setCurrentUser({
+            name: userData.name,
+            about: userData.about,
+            avatar: userData.avatar,
+          });
           setEmail(userData.email);
           setCards(cardsData.cards);
           navigate("/");
