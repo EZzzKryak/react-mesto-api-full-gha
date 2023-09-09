@@ -200,13 +200,13 @@ function App() {
     setIsConfirmPopupOpen(true);
   };
 
-  const handleUpdateUser = profileData => {
+  const handleUpdateUser = ({name, about}) => {
     setIsLoading(true);
     api
-      .setProfileInfo(profileData)
-      .then(res => {
-        console.log(res.user);
-        setCurrentUser(res.user);
+      .setProfileInfo({name, about})
+      .then(user => {
+        console.log(user);
+        setCurrentUser(user);
         closeAllPopups();
       })
       .catch(err => {
