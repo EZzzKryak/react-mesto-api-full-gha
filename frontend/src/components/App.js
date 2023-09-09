@@ -45,22 +45,22 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && localStorage.getItem("jwt")) {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
           setCurrentUser(userData);
           setEmail(userData.email);
           setCards(cardsData.cards);
+        navigate("/");
         })
         .catch(err => console.log(err));
     }
   }, [loggedIn]);
 
-  useEffect(() => {
-    if (localStorage.getItem("jwt")) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("jwt")) {
+  //   }
+  // }, []);
 
   // const tokenCheck = () => {
   //   const jwt = localStorage.getItem("jwt");
