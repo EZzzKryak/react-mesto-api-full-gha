@@ -49,7 +49,6 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
-          console.log(userData);
           setCurrentUser({
             name: userData.name,
             about: userData.about,
@@ -64,61 +63,7 @@ function App() {
     }
   }, [loggedIn]);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("jwt")) {
-  //   }
-  // }, []);
-
-  // const tokenCheck = () => {
-  //   const jwt = localStorage.getItem("jwt");
-  //   if (jwt) {
-  //     // проверим токен
-  //     auth
-  //       .getContent()
-  //       .then(res => {
-  //         if (res) {
-  //           setCurrentUser(currentUser);
-  //           setEmail(res.data.email);
-  //           setLoggedIn(true);
-  //           navigate("/");
-  //         }
-  //       })
-  //       .catch(err => {
-  //         console.log(err);
-  //       });
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     if (localStorage.getItem("jwt")) {
-  //       // const jwt = localStorage.getItem("jwt");
-  //       // tokenCheck();
-  //       api
-  //         .getProfileInfo()
-  //         .then(userData => {
-  //           setCurrentUser(userData);
-  //           setEmail(userData.email);
-  //           // setLoggedIn(true);
-  //           // navigate("/");
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //         });
-  //       api
-  //         .getInitialCards()
-  //         .then(cardsData => {
-  //           setCards(cardsData.cards);
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //         });
-  //     }
-  //   }
-  // }, [loggedIn]);
-
   const handleLogin = ({ email, password }, callback) => {
-    console.log(email, password);
     auth
       .authorizeUser({ email, password })
       .then(res => {

@@ -4,7 +4,7 @@ const User = require('../models/user');
 const ValidationError = require('../errors/validation-err');
 const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
-const { JWT_SECRET } = require('../utils/app.config');
+const { NODE_ENV, JWT_SECRET } = require('../utils/app.config');
 const { CREATED_CODE_STATUS } = require('../utils/constants');
 
 const getProfileUser = (req, res, next) => {
@@ -106,9 +106,13 @@ const login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
-        expiresIn: '7d',
-      });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+        {
+          expiresIn: '7d',
+        },
+      );
       res.send({
         name: user.name,
         about: user.about,
