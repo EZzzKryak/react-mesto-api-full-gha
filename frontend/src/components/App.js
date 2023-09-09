@@ -56,7 +56,7 @@ function App() {
           })
           .catch(err => console.log(err));
       }
-  }, []);
+  }, [loggedIn]);
 
   // useEffect(() => {
   //   if (localStorage.getItem("jwt")) {
