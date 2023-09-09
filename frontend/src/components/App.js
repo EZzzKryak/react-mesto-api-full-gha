@@ -46,37 +46,21 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      if (localStorage.getItem("jwt")) {
-        // const jwt = localStorage.getItem("jwt");
-        // tokenCheck();
-        api
-          .getProfileInfo()
-          .then(userData => {
-            setCurrentUser(userData);
-            setEmail(userData.email);
-            // setLoggedIn(true);
-            // navigate("/");
-          })
-          .catch(err => {
-            console.log(err);
-          });
-        api
-          .getInitialCards()
-          .then(cardsData => {
-            setCards(cardsData.cards);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
+      Promise.all([api.getProfileInfo(), api.getInitialCards()])
+        .then(([userData, cardsData]) => {
+          setCurrentUser(userData);
+          setEmail(userData.email);
+          setCards(cardsData.cards);
+        })
+        .catch(err => console.log(err));
     }
   }, [loggedIn]);
 
   useEffect(() => {
-    if (loggedIn){
+    if (localStorage.getItem("jwt")) {
       navigate("/");
     }
- },[loggedIn]);
+  }, []);
 
   // const tokenCheck = () => {
   //   const jwt = localStorage.getItem("jwt");
@@ -98,6 +82,34 @@ function App() {
   //   }
   // };
 
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     if (localStorage.getItem("jwt")) {
+  //       // const jwt = localStorage.getItem("jwt");
+  //       // tokenCheck();
+  //       api
+  //         .getProfileInfo()
+  //         .then(userData => {
+  //           setCurrentUser(userData);
+  //           setEmail(userData.email);
+  //           // setLoggedIn(true);
+  //           // navigate("/");
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //         });
+  //       api
+  //         .getInitialCards()
+  //         .then(cardsData => {
+  //           setCards(cardsData.cards);
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //         });
+  //     }
+  //   }
+  // }, [loggedIn]);
+
   const handleLogin = (formData, callback) => {
     auth
       .authorizeUser(formData)
@@ -105,7 +117,6 @@ function App() {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          console.log(localStorage.jwt);
           setCurrentUser({
             name: res.name,
             about: res.about,
@@ -207,10 +218,10 @@ function App() {
     setIsConfirmPopupOpen(true);
   };
 
-  const handleUpdateUser = ({name, about}) => {
+  const handleUpdateUser = ({ name, about }) => {
     setIsLoading(true);
     api
-      .setProfileInfo({name, about})
+      .setProfileInfo({ name, about })
       .then(user => {
         setCurrentUser(user);
         closeAllPopups();
@@ -239,10 +250,10 @@ function App() {
       });
   };
 
-  const handleAddPlaceSubmit = ({name, link}) => {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     setIsLoading(true);
     api
-      .postNewCard({name, link})
+      .postNewCard({ name, link })
       .then(res => {
         setCards([res.card, ...cards]);
         closeAllPopups();
