@@ -59,12 +59,12 @@ class Api {
   }
 
   // Возвращает промис для установки нового аватара профиля
-  setProfileAvatar(avatarData) {
+  setProfileAvatar({avatar}) {
     return this._request(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatarData.avatar,
+        avatar,
       }),
     });
   }
