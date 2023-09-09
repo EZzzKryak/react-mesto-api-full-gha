@@ -54,8 +54,8 @@ function App() {
           .then(userData => {
             setCurrentUser(userData);
             setEmail(userData.email);
-            setLoggedIn(true);
-            navigate("/");
+            // setLoggedIn(true);
+            // navigate("/");
           })
           .catch(err => {
             console.log(err);
@@ -71,6 +71,12 @@ function App() {
       }
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn){
+      navigate("/");
+    }
+ },[loggedIn]);
 
   // const tokenCheck = () => {
   //   const jwt = localStorage.getItem("jwt");
@@ -118,9 +124,9 @@ function App() {
       });
   };
 
-  const handleRegister = (formData, callback) => {
+  const handleRegister = ({ email, password }, callback) => {
     auth
-      .registerUser(formData)
+      .registerUser({ email, password })
       .then(res => {
         setTooltipStatus(true);
         callback();
