@@ -36,6 +36,7 @@ function App() {
     name: "",
     about: "",
     avatar: "",
+    _id: "",
   });
 
   const [email, setEmail] = useState("");
@@ -53,6 +54,7 @@ function App() {
             name: userData.name,
             about: userData.about,
             avatar: userData.avatar,
+            _id: userData._id
           });
           setEmail(userData.email);
           setCards(cardsData.cards);
@@ -165,6 +167,7 @@ function App() {
         name: "",
         about: "",
         avatar: "",
+        _id: "",
       });
       setCards([]);
       setEmail("");
