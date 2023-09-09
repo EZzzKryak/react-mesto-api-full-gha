@@ -99,6 +99,7 @@ function App() {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
           localStorage.setItem("jwt", res.token);
+          console.log(localStorage.jwt);
           setCurrentUser({
             name: res.name,
             about: res.about,
