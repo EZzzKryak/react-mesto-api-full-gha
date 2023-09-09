@@ -21,8 +21,14 @@ class Api {
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
   getProfileInfo() {
     return this._request(`${this._baseUrl}/users/me`, {
-      method: "GET",
       headers: this._headers,
+    });
+  }
+
+  getContent() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      method: 'GET',
+        headers: this._headers,
     });
   }
 
