@@ -1,22 +1,27 @@
 import { handleRequest } from "./utils";
 
 class Api {
-  constructor(baseUrl, headers) {
+  constructor(baseUrl) {
     this._baseUrl = baseUrl;
-    this._headers = headers;
   }
 
   // Возвращает промис для получения первоначальных карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then(handleRequest);
   }
 
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
   getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then(handleRequest);
   }
 
@@ -24,7 +29,10 @@ class Api {
   postNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
       body: JSON.stringify({
         name,
         link,
@@ -36,7 +44,10 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then(handleRequest);
   }
 
@@ -44,7 +55,10 @@ class Api {
   setProfileInfo({ name, about }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
       body: JSON.stringify({
         name,
         about,
@@ -56,7 +70,10 @@ class Api {
   setProfileAvatar({ avatar }) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
       body: JSON.stringify({
         avatar,
       }),
@@ -66,14 +83,14 @@ class Api {
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     }).then(handleRequest);
   }
 }
 
-const api = new Api("https://rocket.api.nomoredomainsicu.ru", {
-  "Content-Type": "application/json",
-  authorization: `Bearer ${localStorage.getItem("jwt")}`,
-});
+const api = new Api("https://rocket.api.nomoredomainsicu.ru");
 
 export default api;
