@@ -45,7 +45,6 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("jwt")) {
       if (loggedIn) {
         Promise.all([api.getProfileInfo(), api.getInitialCards()])
           .then(([userData, cardsData]) => {
@@ -56,7 +55,6 @@ function App() {
           })
           .catch(err => console.log(err));
       }
-    }
   }, [loggedIn]);
 
   // useEffect(() => {
