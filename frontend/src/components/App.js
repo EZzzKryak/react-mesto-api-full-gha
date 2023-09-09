@@ -45,6 +45,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(localStorage.getItem("jwt"));
     console.log(loggedIn);
     if (loggedIn) {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
@@ -118,12 +119,12 @@ function App() {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          // setCurrentUser({
-          //   name: res.name,
-          //   about: res.about,
-          //   avatar: res.avatar,
-          // });
-          // setEmail(formData.email);
+          setCurrentUser({
+            name: res.name,
+            about: res.about,
+            avatar: res.avatar,
+          });
+          setEmail(formData.email);
           setLoggedIn(true);
           callback();
           navigate("/");
