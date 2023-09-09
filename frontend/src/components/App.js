@@ -45,15 +45,17 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedIn && localStorage.getItem("jwt")) {
-      Promise.all([api.getProfileInfo(), api.getInitialCards()])
-        .then(([userData, cardsData]) => {
-          setCurrentUser(userData);
-          setEmail(userData.email);
-          setCards(cardsData.cards);
-        navigate("/");
-        })
-        .catch(err => console.log(err));
+    if (localStorage.getItem("jwt")) {
+      if (loggedIn) {
+        Promise.all([api.getProfileInfo(), api.getInitialCards()])
+          .then(([userData, cardsData]) => {
+            setCurrentUser(userData);
+            setEmail(userData.email);
+            setCards(cardsData.cards);
+            navigate("/");
+          })
+          .catch(err => console.log(err));
+      }
     }
   }, [loggedIn]);
 
