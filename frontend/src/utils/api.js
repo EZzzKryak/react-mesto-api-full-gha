@@ -17,6 +17,13 @@ class Api {
     });
   }
 
+  // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
+  getProfileInfo() {
+    return this._request(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    });
+  }
+
   // Возвращает промис для добавления новой карточки
   postNewCard({ name, link }) {
     return this._request(`${this._baseUrl}/cards`, {
@@ -33,13 +40,6 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
-    });
-  }
-
-  // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
-  getProfileInfo() {
-    return this._request(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     });
   }
