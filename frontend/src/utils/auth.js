@@ -8,7 +8,6 @@ class Auth {
   registerUser({ email, password }) {
     return fetch(`${this._baseUrl}/signup`, {
       method: "POST",
-      credentials: 'include',
       headers: {
         "Content-Type": "application/json",
       },
@@ -16,36 +15,43 @@ class Auth {
         email,
         password,
       }),
-    })
-      .then(handleRequest);
+    }).then(handleRequest);
   }
 
   authorizeUser({ email, password }) {
     return fetch(`${this._baseUrl}/signin`, {
-      method: 'POST',
-      credentials: 'include',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
       body: JSON.stringify({
         email,
         password,
-      })
-    })
-    .then(handleRequest);
+      }),
+    }).then(handleRequest);
   }
 
-  getContent(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      credentials: 'include',
+  signOut() {
+    return fetch(`${this._baseUrl}/signout`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }
-    })
-    .then(handleRequest);
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    }).then(handleRequest);
   }
+
+  // getContent() {
+  //   return fetch(`${this._baseUrl}/users/me`, {
+  //     method: 'GET',
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       authorization: `Bearer ${localStorage.getItem("jwt")}`,
+  //     }
+  //   })
+  //   .then(handleRequest);
+  // }
 }
 
 const auth = new Auth("https://rocket.api.nomoredomainsicu.ru");

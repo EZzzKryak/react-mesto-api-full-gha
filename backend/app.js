@@ -9,6 +9,8 @@ const cardRouter = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { PORT = 3000 } = require('./utils/app.config');
+const { DB_URL } = require('./utils/constants');
 
 const auth = require('./middlewares/auth');
 const cors = require('./middlewares/cors');
@@ -19,7 +21,6 @@ const {
   REG_EXP_EMAIL,
 } = require('./utils/constants');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1/mestodb' } = process.env;
 const app = express();
 mongoose.connect(DB_URL);
 
@@ -28,6 +29,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger); // подключаем логгер запросов
 app.use(cors);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post(
   '/signup',
@@ -52,6 +59,10 @@ app.post(
   }),
   login,
 );
+
+app.post('/signout', (req, res) => {
+  res.send({ message: 'Вы вышли со страницы' });
+});
 
 app.use('/users', auth, userRouter);
 app.use('/cards', auth, cardRouter);

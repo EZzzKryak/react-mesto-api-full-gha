@@ -12,7 +12,6 @@ const Main = ({
   onCardDelete,
 }) => {
   const currentUser = useContext(CurrentUserContext);
-
   return (
     <main className="main-content">
       <section className="profile">

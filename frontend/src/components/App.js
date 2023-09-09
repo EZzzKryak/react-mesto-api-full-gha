@@ -36,6 +36,7 @@ function App() {
     name: "",
     about: "",
     avatar: "",
+    _id: "",
   });
 
   const [email, setEmail] = useState("");
@@ -45,54 +46,36 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    tokenCheck();
-    api
-      .getProfileInfo()
-      .then(userData => {
-        setCurrentUser(userData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    api
-      .getInitialCards()
-      .then(cardsData => {
-        setCards(cardsData);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
-
-  const tokenCheck = () => {
-    if (localStorage.getItem("jwt")) {
-      const jwt = localStorage.getItem("jwt");
-      if (jwt) {
-        // проверим токен
-        auth.getContent(jwt)
-        .then(res => {
-          if (res) {
-            setCurrentUser(currentUser);
-            setEmail(res.data.email);
-            setLoggedIn(true);
-            navigate("/");
-          }
+    if (loggedIn) {
+      Promise.all([api.getProfileInfo(), api.getInitialCards()])
+        .then(([userData, cardsData]) => {
+          setCurrentUser({
+            name: userData.name,
+            about: userData.about,
+            avatar: userData.avatar,
+            _id: userData._id
+          });
+          setEmail(userData.email);
+          setCards(cardsData.cards);
+          navigate("/");
         })
-        .catch(err => {
-          console.log(err);
-        });
-      }
+        .catch(err => console.log(err));
     }
-  };
+  }, [loggedIn]);
 
-  const handleLogin = (formData, callback) => {
+  const handleLogin = ({ email, password }, callback) => {
     auth
-      .authorizeUser(formData)
+      .authorizeUser({ email, password })
       .then(res => {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          setEmail(formData.email);
+          localStorage.setItem("jwt", res.token);
+          // setCurrentUser({
+          //   name: res.name,
+          //   about: res.about,
+          //   avatar: res.avatar,
+          // });
+          // setEmail(formData.email);
           setLoggedIn(true);
           callback();
           navigate("/");
@@ -105,9 +88,9 @@ function App() {
       });
   };
 
-  const handleRegister = (formData, callback) => {
+  const handleRegister = ({ email, password }, callback) => {
     auth
-      .registerUser(formData)
+      .registerUser({ email, password })
       .then(res => {
         setTooltipStatus(true);
         callback();
@@ -119,13 +102,26 @@ function App() {
       })
       .finally(() => {
         setIsTooltipPopupOpen(true);
-      })
+      });
   };
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
-    setLoggedIn(false);
-    navigate("/login");
+    auth.signOut().then(() => {
+      setCurrentUser({
+        name: "",
+        about: "",
+        avatar: "",
+        _id: "",
+      });
+      setCards([]);
+      setEmail("");
+      setLoggedIn(false);
+      navigate("/login");
+    })
+    .catch(err => {
+      console.log(err);
+    });
   };
 
   const handleCardClick = card => {
@@ -151,7 +147,7 @@ function App() {
   };
 
   const handleCardLike = card => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then(selectedCard => {
@@ -181,12 +177,12 @@ function App() {
     setIsConfirmPopupOpen(true);
   };
 
-  const handleUpdateUser = profileData => {
+  const handleUpdateUser = ({ name, about }) => {
     setIsLoading(true);
     api
-      .setProfileInfo(profileData)
-      .then(profileData => {
-        setCurrentUser(profileData);
+      .setProfileInfo({ name, about })
+      .then(user => {
+        setCurrentUser(user);
         closeAllPopups();
       })
       .catch(err => {
@@ -213,12 +209,12 @@ function App() {
       });
   };
 
-  const handleAddPlaceSubmit = cardData => {
+  const handleAddPlaceSubmit = ({ name, link }) => {
     setIsLoading(true);
     api
-      .postNewCard(cardData)
-      .then(newCard => {
-        setCards([newCard, ...cards]);
+      .postNewCard({ name, link })
+      .then(res => {
+        setCards([res.card, ...cards]);
         closeAllPopups();
       })
       .catch(err => {
