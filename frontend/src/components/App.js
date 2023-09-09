@@ -170,7 +170,7 @@ function App() {
   };
 
   const handleCardLike = card => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, isLiked)
       .then(selectedCard => {
@@ -204,8 +204,9 @@ function App() {
     setIsLoading(true);
     api
       .setProfileInfo(profileData)
-      .then(profileData => {
-        setCurrentUser(profileData);
+      .then(res => {
+        console.log(res.user);
+        setCurrentUser(res.user);
         closeAllPopups();
       })
       .catch(err => {
