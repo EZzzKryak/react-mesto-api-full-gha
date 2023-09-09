@@ -20,15 +20,15 @@ class Api {
 
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
   getProfileInfo() {
-    return this._request(`${this._baseUrl}/users/me`, {
+    this._request(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     });
   }
 
   getContent() {
-    return this._request(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-        headers: this._headers,
+    this._request(`${this._baseUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
     });
   }
 
@@ -53,7 +53,7 @@ class Api {
   }
 
   // Возвращает промис для установки новых данных профиля из формы
-  setProfileInfo({name, about}) {
+  setProfileInfo({ name, about }) {
     return this._request(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
