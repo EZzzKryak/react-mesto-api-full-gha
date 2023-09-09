@@ -7,8 +7,8 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.38.137
+IP 158.160.38.137
 
-Frontend rocket.mesto.nomoredomainsicu.ru
+Frontend https://rocket.mesto.nomoredomainsicu.ru
 
-Backend rocket.api.nomoredomainsicu.ru
+Backend https://rocket.api.nomoredomainsicu.ru
