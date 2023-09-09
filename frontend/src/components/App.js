@@ -48,6 +48,7 @@ function App() {
     if (loggedIn) {
       Promise.all([api.getProfileInfo(), api.getInitialCards()])
         .then(([userData, cardsData]) => {
+          console.log(localStorage.jwt);
           console.log(userData);
           setCurrentUser({
             name: userData.name,
@@ -121,8 +122,8 @@ function App() {
       .then(res => {
         // нужно проверить, есть ли у данных jwt
         if (res.token) {
-          console.log(res);
           localStorage.setItem("jwt", res.token);
+          console.log(localStorage.jwt);
           // setCurrentUser({
           //   name: res.name,
           //   about: res.about,
