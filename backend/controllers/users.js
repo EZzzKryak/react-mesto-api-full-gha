@@ -8,7 +8,7 @@ const { JWT_SECRET } = require('../utils/app.config');
 const { CREATED_CODE_STATUS } = require('../utils/constants');
 
 const getProfileUser = (req, res, next) => {
-  User.findOne({ _id: req.user._id })
+  User.findById(req.user._id)
     .orFail(new NotFoundError('Пользователь не найден'))
     .then((user) => {
       res.send(user);
