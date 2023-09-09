@@ -125,12 +125,12 @@ function App() {
         if (res.token) {
           console.log(res);
           localStorage.setItem("jwt", res.token);
-          setCurrentUser({
-            name: res.name,
-            about: res.about,
-            avatar: res.avatar,
-          });
-          setEmail(formData.email);
+          // setCurrentUser({
+          //   name: res.name,
+          //   about: res.about,
+          //   avatar: res.avatar,
+          // });
+          // setEmail(formData.email);
           setLoggedIn(true);
           callback();
           navigate("/");
