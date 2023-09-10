@@ -53,15 +53,27 @@ function App() {
             name: userData.name,
             about: userData.about,
             avatar: userData.avatar,
-            _id: userData._id
+            _id: userData._id,
           });
           setEmail(userData.email);
           setCards(cardsData.cards);
-          navigate("/");
+          // navigate("/");
         })
         .catch(err => console.log(err));
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    auth
+      .getContent()
+      .then(data => {
+        if (data) {
+          setLoggedIn(true);
+          navigate("/");
+        }
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const handleLogin = ({ email, password }, callback) => {
     auth
@@ -107,21 +119,23 @@ function App() {
 
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
-    auth.signOut().then(() => {
-      setCurrentUser({
-        name: "",
-        about: "",
-        avatar: "",
-        _id: "",
+    auth
+      .signOut()
+      .then(() => {
+        setCurrentUser({
+          name: "",
+          about: "",
+          avatar: "",
+          _id: "",
+        });
+        setCards([]);
+        setEmail("");
+        setLoggedIn(false);
+        navigate("/login");
+      })
+      .catch(err => {
+        console.log(err);
       });
-      setCards([]);
-      setEmail("");
-      setLoggedIn(false);
-      navigate("/login");
-    })
-    .catch(err => {
-      console.log(err);
-    });
   };
 
   const handleCardClick = card => {
