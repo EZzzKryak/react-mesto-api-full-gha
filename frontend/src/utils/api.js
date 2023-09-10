@@ -6,21 +6,21 @@ class Api {
   }
 
   // Возвращает промис для получения первоначальных карточек с сервера
-  getInitialCards(token) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     }).then(handleRequest);
   }
 
   // Возвращает промис для первоначального получения данных профиля с сервера (имени, описания и аватара)
-  getProfileInfo(token) {
+  getProfileInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         "Content-Type": "application/json",
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     }).then(handleRequest);
   }
